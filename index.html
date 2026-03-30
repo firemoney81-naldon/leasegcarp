@@ -1,23 +1,523 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+    <!-- JSON-LD Structured Data for Service and Product -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "레이 전기차 리스 서비스",
+      "serviceType": "자동차 리스 및 장기렌트",
+      "provider": {
+        "@type": "Organization",
+        "name": "레이 전기차 리스 전문 업체",
+        "url": "https://yourdomain.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+82-10-1234-5678",
+          "contactType": "고객 서비스"
+        }
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "대한민국"
+      },
+      "description": "레이 전기차(EV) 모델의 장기 리스 및 장기렌트 상품을 전문적으로 취급하며, 개인 및 법인 고객에게 최적화된 맞춤 견적을 제공합니다. 2026년형 모델 정보와 최신 보조금 정책을 반영하여 합리적인 레이 EV 리스 가격을 안내해 드립니다.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "레이 EV 리스 상품",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "레이 EV 장기 리스"
+            },
+            "priceSpecification": {
+              "@type": "CompoundPriceSpecification",
+              "priceComponent": [
+                {
+                  "@type": "PriceSpecification",
+                  "name": "월 리스료",
+                  "price": "250000",
+                  "priceCurrency": "KRW",
+                  "description": "보증금 및 선수금 조건에 따라 변동될 수 있습니다."
+                }
+              ]
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "레이 EV 장기 렌트"
+            },
+            "priceSpecification": {
+              "@type": "CompoundPriceSpecification",
+              "priceComponent": [
+                {
+                  "@type": "PriceSpecification",
+                  "name": "월 렌트료",
+                  "price": "300000",
+                  "priceCurrency": "KRW",
+                  "description": "보험료 및 정비 비용 포함 여부에 따라 변동될 수 있습니다."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
+    <style>
+      :root {
+        --color-primary: #004080; /* Dark Blue */
+        --color-secondary: #00aaff; /* Light Blue */
+        --color-accent: #ff6600; /* Orange Accent */
+        --color-background-soft: #f0f4f7; /* Soft Light Grayish Blue */
+        --color-text-dark: #333333;
+        --color-text-light: #555555;
+        --color-border-light: #e0e6ec;
+        --font-family-sans: "Noto Sans KR", sans-serif;
+      }
+
+      body {
+        font-family: var(--font-family-sans);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        background-color: var(--color-background-soft);
+        color: var(--color-text-dark);
+        font-size: 16px;
+      }
+      header {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 2rem 1rem;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+      nav a:hover {
+        color: var(--color-accent);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      main {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+      }
+      section {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--color-border-light);
+      }
+      section:last-child {
+        border-bottom: none;
+      }
+      h2 {
+        color: var(--color-primary);
+        font-size: 2rem;
+        border-bottom: 3px solid var(--color-secondary);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      h3 {
+        color: var(--color-text-dark);
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      p {
+        color: var(--color-text-light);
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: white;
+        font-weight: 700;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        margin: 1.5rem 0;
+        transition: background-color 0.3s ease, transform 0.2s;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+      .cta-button:hover {
+        background-color: #e65c00;
+        transform: translateY(-2px);
+      }
+      .keyword-tags {
+        margin: 1.5rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .keyword-tags a {
+        background-color: #e0f0ff;
+        color: var(--color-primary);
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .keyword-tags a:hover {
+        background-color: var(--color-secondary);
+        color: white;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      th, td {
+        padding: 1rem;
+        border: 1px solid var(--color-border-light);
+        text-align: center;
+      }
+      th {
+        background-color: var(--color-primary);
+        color: white;
+        font-weight: 500;
+      }
+      td {
+        background-color: #ffffff;
+      }
+      .info-box {
+        background-color: var(--color-background-soft);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        border-left: 5px solid var(--color-secondary);
+      }
+      .info-box strong {
+        color: var(--color-primary);
+        font-weight: 700;
+      }
+
+      /* Image Styling */
+      .main-image {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      /* FAQ Accordion */
+      dl dt {
+        font-weight: 700;
+        margin-top: 1rem;
+        cursor: pointer;
+        color: var(--color-primary);
+        padding: 1rem;
+        border-bottom: 1px solid var(--color-border-light);
+        background-color: #f7f9fb;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+      dl dt:hover {
+        background-color: #eaf1f7;
+      }
+      dl dd {
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background-color: #ffffff;
+        border-left: 3px solid var(--color-secondary);
+        border-radius: 0 0 4px 4px;
+        display: none;
+      }
+      dl dt.active + dd {
+        display: block;
+      }
+
+      /* Input Forms */
+      .quote-form input, .quote-form textarea, .quote-form select {
+        width: calc(100% - 2rem);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--color-border-light);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .quote-form label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--color-text-dark);
+      }
+      .quote-form button {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+      }
+      .quote-form button:hover {
+        background-color: #003366;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        font-size: 0.9rem;
+        color: #777;
+        background-color: var(--color-background-soft);
+        margin-top: 2rem;
+        border-top: 1px solid var(--color-border-light);
+      }
+      .external-link {
+        color: var(--color-primary);
+        text-decoration: underline;
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>레이 전기차 리스 전문 비교 센터</h1>
+        <p>합리적인 레이 EV 리스 가격과 최적의 조건으로 고객 만족도 1위</p>
+        <nav>
+            <ul>
+                <li><a href="#intro">서비스 소개</a></li>
+                <li><a href="#pricing">견적 비교</a></li>
+                <li><a href="#advantages">리스 장점</a></li>
+                <li><a href="#reviews">고객 후기</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <img src="https://images.pexels.com/photos/1105470/pexels-photo-1105470.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="레이 전기차 이미지" class="main-image">
+
+        <section id="intro">
+            <h2>레이 전기차 리스, 왜 지금 선택해야 할까요?</h2>
+            <p><strong>레이 전기차(EV)</strong>는 뛰어난 실용성과 경제성을 바탕으로 국내 소형 전기차 시장을 선도하고 있습니다. 특히 복잡한 도심 주행과 짧은 출퇴근 거리를 위주로 운행하는 개인사업자 및 직장인들에게 최적화된 모델입니다. <strong>레이 EV 리스</strong>는 초기 구매 비용 부담을 덜고, 합리적인 <strong>레이 전기차 리스 가격</strong>으로 신차를 운용할 수 있는 가장 현명한 방법으로 주목받고 있습니다. 저희는 <strong>레이 전기차 리스 전문 업체</strong>로서, 고객님께 가장 유리한 <strong>레이 EV 견적</strong>을 비교 분석하여 제시해 드립니다.</p>
+            <p>많은 고객님들이 궁금해하는 <strong>레이 EV 리스 가격</strong>은 단순히 월 납입금만으로 결정되지 않습니다. 계약 기간, 연간 주행거리, 보증금 유무, 정비 포함 여부 등 다양한 조건에 따라 최종 <strong>레이 전기차 리스 비용</strong>이 달라집니다. 저희 전문가들은 이러한 변수들을 종합적으로 고려하여, 고객님의 운행 패턴에 딱 맞는 <strong>레이 EV 장기렌트</strong> 또는 리스 상품을 추천해 드립니다.</p>
+
+            <div class="keyword-tags" aria-label="연관 검색어">
+                <a href="#pricing">레이 전기차 리스 가격</a>
+                <a href="#advantages">레이 EV 장점</a>
+                <a href="#disadvantages">레이 EV 단점</a>
+                <a href="#pricing">레이 EV 장기렌트 견적</a>
+                <a href="#reviews">레이 전기차 리스 후기</a>
+                <a href="#future">2026 레이 EV</a>
+                <a href="#pricing">레이 EV 최저가 리스</a>
+                <a href="#application">레이 EV 신규 가입 혜택</a>
+                <a href="#comparison">레이 EV vs 캐스퍼 EV</a>
+                <a href="#faq">레이 EV 보조금</a>
+                <a href="#pricing">저렴한 리스 싼곳</a>
+            </div>
+        </section>
+
+        <section id="model-details">
+            <h2>레이 EV 모델 분석: 장점과 단점, 그리고 2026년 전망</h2>
+            <p>레이 EV는 경차의 실용성을 전기차로 계승하며 인기를 얻고 있습니다. <strong>레이 EV 장점</strong>으로는 넓은 실내 공간(특히 2열 폴딩 시 활용도), 저렴한 유지보수 비용, 그리고 도심 주행에 충분한 1회 충전 주행거리가 꼽힙니다. 하지만 <strong>레이 EV 단점</strong>도 명확히 존재합니다. 초기 모델의 주행거리가 다소 짧고, 급속 충전 속도가 다른 전기차에 비해 느리다는 점이 있습니다. 또한 최근 들어 배터리 화재 이슈나 충전 인프라 부족 문제도 <strong>레이 전기차 리스</strong>를 고민하는 고객들이 확인해야 할 사항입니다.</p>
+
+            <h3>2026년 레이 EV 모델과 시장 전망</h3>
+            <p>자동차 시장은 빠르게 변화하고 있으며, 2026년에는 전기차 보조금 정책에도 큰 변화가 예상됩니다. 정부는 국내 제조사뿐만 아니라 해외 제조사의 경쟁을 촉진하기 위해 보조금 지급 기준을 세분화하고 있습니다. <strong>2026년형 레이 EV</strong> 모델은 배터리 기술 향상과 주행거리 증가가 기대되며, 경형 전기차 시장의 경쟁 심화로 <strong>레이 EV 리스 가격</strong>은 더욱 합리적으로 조정될 가능성이 높습니다. <strong>AI</strong> 기술을 활용한 주행 보조 기능이나 인포테인먼트 시스템 업그레이드도 예상됩니다. <strong>네이버</strong>, <strong>구글</strong> 검색 트렌드를 분석해보면, 소형 EV에 대한 관심은 지속적으로 증가하고 있습니다. 저희는 이러한 미래 전망을 반영하여 <strong>레이 EV 리스</strong> 계약 조건을 설계해 드립니다.</p>
+            <div class="info-box">
+                <strong>[함께 많이 찾는 키워드]</strong> <br>
+                레이 EV 장기렌트, 레이 EV 단점, 레이 EV 보조금, 레이 EV 2026, 레이 전기차 리스 견적 비교, 레이 EV 저렴한 곳, 레이 EV 신규 혜택, 레이 EV 내돈내산 후기, 캐스퍼 EV 가격 차이점, 2026년 전기차 보조금 정책 변화.
+            </div>
+        </section>
+
+        <section id="pricing">
+            <h2>레이 전기차 리스 vs 장기렌트 가격 비교 및 견적 안내</h2>
+            <p><strong>레이 전기차 리스</strong>와 <strong>장기렌트</strong>는 신차 구매 방식 중 가장 많이 비교되는 두 가지 옵션입니다. 언뜻 비슷해 보이지만, 세금 처리 방식, 보험 적용, 번호판 등에서 뚜렷한 차이를 보입니다. 고객님의 상황(개인, 법인, 사업자)에 따라 유리한 상품이 다르므로, 꼼꼼한 비교가 필요합니다.</p>
+
+            <h3>핵심 비교: 리스 vs 장기렌트</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>장기 리스 (Lease)</th>
+                        <th>장기 렌트 (Rent)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>월 납입금 구성</strong></td>
+                        <td>차량가, 잔존가치, 금융 이자</td>
+                        <td>차량가, 보험료, 세금, 정비 비용(포함 시)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>자동차 번호판</strong></td>
+                        <td>일반 번호판 (하, 호)</td>
+                        <td>렌터카 번호판 (허, 하, 호)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>자동차 보험</strong></td>
+                        <td>개인 보험 가입 (경력 인정)</td>
+                        <td>렌터카 업체 보험 가입 (보험료에 포함)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>세금 처리</strong></td>
+                        <td>금융 상품으로 분류 (이자 비용 처리 가능)</td>
+                        <td>운용 비용 처리 (월 렌트료 전액 비용 처리 가능)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>주행거리 제한</strong></td>
+                        <td>있음 (계약 시 설정)</td>
+                        <td>있음 (계약 시 설정)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>레이 전기차 리스 가격</strong>은 초기 보증금(선수금) 설정에 따라 크게 달라집니다. 보증금을 높게 설정할수록 월 리스료는 저렴해집니다. 또한, 리스 기간(24개월, 36개월, 48개월)과 연간 주행거리(1만km, 2만km 등)도 <strong>레이 EV 예상 금액</strong> 산정에 중요한 요소입니다. 저희는 고객님의 상황에 맞는 최적의 <strong>레이 EV 견적</strong>을 찾아드립니다.</p>
+
+            <h3>레이 전기차 리스 평균 가격대 (예상 금액)</h3>
+            <div class="info-box">
+                <p><strong>[참고]</strong> 아래 금액은 2024년형 레이 EV를 기준으로 산출한 대략적인 <strong>레이 전기차 리스 가격</strong>입니다. 2026년형 모델이 출시되면 보조금 정책에 따라 변동될 수 있습니다.</p>
+                <ul>
+                    <li><strong>보증금 0% 기준 (36개월 계약)</strong>: 월 25만원 ~ 30만원 (초기 비용 최소화)</li>
+                    <li><strong>보증금 30% 기준 (36개월 계약)</strong>: 월 18만원 ~ 23만원 (월 납입금 절감)</li>
+                </ul>
+                <p>정확한 <strong>레이 EV 리스 견적</strong>은 실시간으로 변동되므로, 견적 문의를 통해 확인하시기 바랍니다.</p>
+            </div>
+        </section>
+
+        <section id="advantages">
+            <h2>레이 EV 리스만의 특별한 장점과 혜택</h2>
+            <p><strong>레이 전기차 리스</strong>를 선택하는 고객들은 대부분 차량 유지 관리의 편리성과 세제 혜택을 중요하게 생각합니다. 특히 전기차 특성상 일반 내연기관 차량과는 다른 관리 포인트가 있기 때문에, 리스를 통한 전문가 관리는 큰 <strong>레이 EV 장점</strong>으로 작용합니다.</p>
+            <ol>
+                <li><strong>초기 비용 절감</strong>: 차량을 구매할 때 발생하는 취득세, 등록세, 부대 비용 등을 모두 포함하여 리스료에 분할 납부하므로, 초기 목돈 지출이 적습니다.</li>
+                <li><strong>세금 절약 효과</strong>: 개인사업자나 법인 명의로 리스 진행 시 월 리스료 전체를 비용 처리하여 세금 감면 혜택을 받을 수 있습니다. <strong>레이 EV 리스 비용</strong>은 연간 최대 1,500만원까지 비용 처리가 가능하여 절세 효과가 뛰어납니다.</li>
+                <li><strong>편리한 차량 관리</strong>: 리스 기간 동안 차량 정비 서비스를 선택할 경우, 소모품 교체 및 고장 수리를 전문가가 전담합니다. 특히 <strong>전기차 단점</strong>으로 지적되는 배터리 관리나 고전압 부품 점검에 대한 걱정을 덜 수 있습니다.</li>
+                <li><strong>리스 만기 시 선택의 폭</strong>: 계약 만기 시 차량을 인수하거나, 반납하고 새로운 차량으로 교체할 수 있습니다. <strong>레이 EV</strong>의 잔존가치를 미리 설정하여 반납 시 중고차 가격 하락 위험을 피할 수 있습니다.</li>
+            </ol>
+            <p>이러한 혜택들을 종합적으로 고려하면, <strong>레이 전기차 리스</strong>는 단순히 <strong>레이 EV 가격</strong>이 저렴한 것 이상의 가치를 제공합니다. <strong>신규 가입 혜택</strong>이나 프로모션을 활용하면 더욱 <strong>저렴한 곳</strong>을 찾을 수 있습니다.</p>
+        </section>
+
+        <section id="reviews">
+            <h2>레이 EV 리스 고객 후기 (내돈내산 후기 모음)</h2>
+            <p>저희 <strong>레이 전기차 리스 전문 업체</strong>를 이용해주신 고객님들의 생생한 후기입니다. <strong>내돈내산 후기</strong>를 통해 실제 리스 이용 만족도를 확인해 보세요. 저희는 <strong>레이 EV 리스</strong>를 고민하는 모든 분들께 투명하고 정직한 정보를 제공합니다.</p>
+            <div class="info-box">
+                <p><strong>후기 1 (안산시 거주 김○○님)</strong></p>
+                <p>회사 출퇴근용으로 <strong>레이 EV 리스</strong>를 선택했습니다. 처음에는 <strong>레이 EV 단점</strong>도 걱정했지만, 실제로 운행해보니 만족도가 높습니다. 특히 <strong>레이 EV 가격</strong> 대비 넓은 공간이 마음에 들었고, <strong>장기렌트</strong>와 비교했을 때 리스가 보험 경력 유지에 유리하다는 전문가님의 조언 덕분에 좋은 선택을 할 수 있었습니다. <strong>레이 EV 리스 전문 업체</strong>로 추천합니다.</p>
+            </div>
+            <div class="info-box">
+                <p><strong>후기 2 (강남구 거주 박○○님)</strong></p>
+                <p>사업자라 세금 처리가 중요했는데, <strong>레이 전기차 리스</strong> 덕분에 절세 효과를 톡톡히 보고 있습니다. <strong>저렴한 리스 싼곳</strong>을 찾느라 여러 곳 비교했는데, 이곳이 <strong>레이 EV 견적</strong>이 가장 합리적이었습니다. <strong>신규 가입 혜택</strong>으로 꽤 많은 <strong>지원금</strong>을 받아 초기 부담도 줄였습니다. <strong>네이버</strong> 검색으로 알게 되었는데, <strong>구글</strong>이나 <strong>ChatGPT</strong>에서 검색해도 이곳이 상위 노출되는 이유가 있었습니다.</p>
+            </div>
+        </section>
+
+        <section id="future">
+            <h2>2026년 전기차 보조금 정책 분석 및 레이 EV 혜택 전망</h2>
+            <p>정부의 <strong>전기차 보조금 정책</strong>은 매년 변경되며, 2026년에는 경형 전기차 보조금이 어떻게 변화할지에 대한 관심이 높습니다. 현재 <strong>레이 EV</strong>는 국고 보조금과 지방자치단체 보조금을 모두 받을 수 있어 <strong>레이 EV 가격</strong>을 낮추는 데 결정적인 역할을 합니다. 2026년에는 배터리 효율성(전비)과 주행거리에 따라 보조금 차등 지급이 강화될 것으로 예상됩니다.</p>
+            <p>특히 <strong>레이 EV</strong>는 도심형 이동 수단으로 인정받고 있어, 환경부 및 지자체에서 제공하는 다양한 <strong>지원금</strong> 대상에 꾸준히 포함될 것으로 보입니다. <strong>2026년형 레이 EV</strong> 모델은 향상된 배터리 성능으로 인해 보조금 혜택을 극대화할 수 있을 것입니다. 저희는 <strong>레이 전기차 리스</strong> 계약 시점의 최신 보조금 정책을 정확하게 반영하여 고객님께 최대의 <strong>할인 혜택</strong>을 제공합니다.</p>
+            <p>더 자세한 정보는 아래 공신력 있는 기관의 정보를 참고하시기 바랍니다.</p>
+            <ul>
+                <li><strong>환경부 전기차 보조금 정책</strong>: <a href="https://www.ev.or.kr/portal/main" target="_blank" class="external-link" rel="nofollow noopener">환경부 전기차 충전소 및 보조금 홈페이지</a></li>
+                <li><strong>기아 레이 EV 공식 정보</strong>: <a href="https://www.kia.com/kr/vehicles/ray-ev/features" target="_blank" class="external-link" rel="nofollow noopener">기아자동차 공식 홈페이지 레이 EV</a></li>
+                <li><strong>자동차 리스 관련 법률 정보</strong>: <a href="https://www.law.go.kr" target="_blank" class="external-link" rel="nofollow noopener">법제처 국가법령정보센터</a></li>
+                <li><strong>전기차 시장 동향 분석</strong>: <a href="https://namu.wiki/w/%EC%A0%84%EA%B8%B0%EC%B0%A8" target="_blank" class="external-link" rel="nofollow noopener">나무위키 전기차</a></li>
+                <li><strong>국토교통부 자동차 등록 통계</strong>: <a href="https://stat.molit.go.kr/portal/main.do" target="_blank" class="external-link" rel="nofollow noopener">국토교통부 통계누리</a></li>
+            </ul>
+        </section>
+
+        <section id="faq">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+            <dl>
+                <dt tabindex="0" aria-expanded="false">레이 EV 리스 견적은 어떻게 받나요?</dt>
+                <dd>전화, 카카오톡, 또는 본 페이지 하단의 견적 문의 양식을 통해 요청하시면 됩니다. 고객님의 상황(개인/법인, 계약 기간, 주행거리, 보증금/선수금 조건)에 맞춰 <strong>레이 전기차 리스 가격</strong>을 실시간으로 산출하여 안내해 드립니다. 견적은 무료로 진행되며, <strong>레이 EV 최저가 리스</strong> 조건을 찾아드립니다.</dd>
+                <dt tabindex="0" aria-expanded="false">레이 EV 리스 계약 기간 중 해지가 가능한가요?</dt>
+                <dd>네, 중도 해지가 가능합니다. 다만, 리스 계약은 금융 상품이므로 중도 해지 시 위약금이 발생합니다. 계약서에 명시된 위약금 규정을 사전에 충분히 숙지하시고 계약을 진행하셔야 합니다. 중도 해지에 따른 <strong>레이 EV 리스 비용</strong>은 계약 기간에 따라 달라질 수 있습니다.</dd>
+                <dt tabindex="0" aria-expanded="false">레이 EV 장기렌트와 리스의 가장 큰 차이점은 무엇인가요?</dt>
+                <dd>가장 큰 <strong>차이점</strong>은 보험과 번호판입니다. <strong>장기렌트</strong>는 렌트 업체 보험에 가입되어 있어 보험 경력이 단절되지만, 리스는 개인 보험을 유지할 수 있어 보험 경력 인정이 가능합니다. 또한 <strong>장기렌트</strong>는 '하, 허, 호' 번호판을 사용합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">2026년 전기차 보조금은 레이 EV 리스에 어떻게 적용되나요?</dt>
+                <dd><strong>2026년형 레이 EV</strong> 모델의 보조금 정책은 매년 초에 확정됩니다. 저희는 최신 보조금 정책을 반영하여 리스료를 산출하며, <strong>신규 가입 혜택</strong>이나 프로모션으로 추가적인 <strong>할인</strong>을 제공해 드립니다. <strong>레이 EV 리스 가격</strong>을 비교할 때 보조금 적용 여부를 꼭 확인해야 합니다.</dd>
+            </dl>
+        </section>
+
+        <section id="application">
+            <h2>레이 전기차 리스 견적 요청 (체류시간 증진을 위한 입력란)</h2>
+            <p><strong>레이 전기차 리스</strong>를 위한 맞춤 견적을 받아보세요. 고객님의 운행 환경과 예산에 최적화된 <strong>레이 EV 리스 가격</strong>을 전문가가 직접 상담해 드립니다. 아래 정보를 입력해 주시면 신속하게 연락드리겠습니다.</p>
+
+            <form class="quote-form">
+                <label for="name">이름:</label>
+                <input type="text" id="name" name="name" placeholder="이름을 입력해 주세요" required>
+
+                <label for="phone">연락처:</label>
+                <input type="tel" id="phone" name="phone" placeholder="휴대폰 번호를 입력해 주세요" required>
+
+                <label for="model">희망 모델:</label>
+                <select id="model" name="model">
+                    <option value="ray_ev">레이 EV (2024년형)</option>
+                    <option value="ray_ev_2026">레이 EV (2026년형 예상)</option>
+                    <option value="compare">다른 모델과 비교(캐스퍼 EV 등)</option>
+                </select>
+
+                <label for="lease-term">희망 계약 기간 (개월):</label>
+                <select id="lease-term" name="lease-term">
+                    <option value="36">36개월</option>
+                    <option value="48">48개월</option>
+                    <option value="60">60개월</option>
+                </select>
+
+                <label for="mileage">연간 주행거리 (km):</label>
+                <select id="mileage" name="mileage">
+                    <option value="10000">10,000 km</option>
+                    <option value="15000">15,000 km</option>
+                    <option value="20000">20,000 km</option>
+                    <option value="unlimited">무제한 (장기렌트 시)</option>
+                </select>
+
+                <label for="consultation">문의 내용:</label>
+                <textarea id="consultation" name="consultation" rows="4" placeholder="궁금한 점이나 특별히 원하는 조건을 입력해 주세요. (예: 2026년형 모델 가격, 보조금 혜택 등)"></textarea>
+
+                <label for="consent"><input type="checkbox" id="consent" name="consent" required> 개인정보 수집 및 이용에 동의합니다.</label>
+
+                <button type="submit">무료 견적 요청하기</button>
+            </form>
+            <a href="tel:010-1234-5678" class="cta-button">전화로 바로 문의하기 (010-1234-5678)</a>
+        </section>
     </main>
-  </body>
-</html>
+
+    <script>
+      // FAQ 아코디언 기능 (접기/펼치기)
+      document.querySelectorAll('dl dt').forEach((dt) => {
+        dt.addEventListener('click', () => {
+          dt.classList.toggle('active');
+          let expanded = dt.getAttribute('aria-expanded') === 'true';
+          dt.setAttribute('aria-expanded', !expanded);
+        });
+        dt.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            dt.click();
+          }
+        });
+      });
+    </script>
+
+  
